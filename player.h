@@ -27,6 +27,19 @@ class Player {
             DrawCircle(x, y, radius, WHITE);
         };
 
+        void Update(){
+            x += speedX;
+            y += speedY;
+
+            checkCollision();
+        }
+
+        void checkCollision(){
+            if(y + radius >= GetScreenHeight()){
+                speedY *= 0;
+            }
+        }
+
         float getX(){return x;};
         float getY(){return y;};
         int getSpeedX(){return speedX;};
