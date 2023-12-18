@@ -13,7 +13,7 @@ class Player {
         float x, y;
         int speedX = 0, speedY = 0;
         int radius = 30;
-        float gravity = 5;
+        float gravity = 2;
         bool isAirborne = false;
 
     public:
@@ -61,11 +61,11 @@ class Player {
 
         void horizontalMovement(){
             if(IsKeyDown(KEY_RIGHT)){
-                speedX = 5;
+                speedX = 8;
             }
 
             else if(IsKeyDown(KEY_LEFT)){
-                speedX = -5;
+                speedX = -8;
             }
 
             else{
@@ -74,22 +74,28 @@ class Player {
         }
 
         void checkAirborne(){
-           if(y + radius <  GetScreenHeight() && speedY == 0) {
-            isAirborne = true;
-           }
-           else{
-            isAirborne = false;
-           }
-        };
-
-        void playerJump(){
+            if(y + radius <  GetScreenHeight()){
+                isAirborne = true;
+            }
+            else{
+                isAirborne = false;
+            }
         }
 
+        void playerJump(){
+            checkAirborne();
+            if(IsKeyDown(KEY_SPACE) && !isAirborne){
+                speedY += -40 + gravity*GetFrameTime();
+            }
+            else if(isAirborne){
+                speedY += gravity;
+            }
+            else{
+                speedY = 0;
+            }
 
-        float getX(){return x;};
-        float getY(){return y;};
-        int getSpeedX(){return speedX;};
-        int getSpeedY(){return speedY;}; 
+        }
+
 };
 
 
