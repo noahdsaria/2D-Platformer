@@ -33,11 +33,11 @@ class Player {
 
         void checkCollision();
 
-        void checkInput();
+        void horizontalMove();
 
         void animateWalk();
 
         void checkAirborne();
 
-        void verticalMove();
+        void Jump();
 };
