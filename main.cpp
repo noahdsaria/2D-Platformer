@@ -1,24 +1,21 @@
 #include "player.h"
 #include <iostream>
 
-int main(){
-    const int screenWidth = 1200;
-    const int screenHeight = 800;
-    std::cout << GetScreenHeight() << std::endl;
-    Player player(screenWidth / 2, screenHeight - 30);
+const int SCREEN_WIDTH = 1200;
+const int SCREEN_HEIGHT = 800;
 
-    InitWindow(screenWidth, screenHeight, "Platformer");
+int main(){
+    Player player;
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Platformer");
     SetTargetFPS(60);
+    player.initPlayerTexture();
+
     while(!WindowShouldClose()){
         BeginDrawing();
-
-        player.Update();
-        ClearBackground(BLACK);
-        player.Draw();
-
-
+            ClearBackground(BLACK);
+            player.Update();    
+            player.Draw();
         EndDrawing();
     }
-
     CloseWindow();
 }
