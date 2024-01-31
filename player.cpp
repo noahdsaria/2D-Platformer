@@ -25,18 +25,40 @@ void Player::Update(){
 void Player::initPlayerTexture(){
     texture.playerSprite = LoadTexture("sprites/player.png");
     texture.source = {0, 0, (float) texture.playerSprite.width / 9, (float) texture.playerSprite.height / 2};
-    texture.dest = {(float) GetScreenWidth() / 2, (float) GetScreenHeight() - (float) texture.playerSprite.height / 2, (float) texture.playerSprite.width / 9, (float) texture.playerSprite.height / 2};
+    texture.dest = {
+    (float) GetScreenWidth() / 2, 
+    (float) GetScreenHeight() - (float) texture.source.height / 2, 
+    (float) texture.playerSprite.width / 9, 
+    (float) texture.playerSprite.height / 2};
     
     texture.origin = {(float) texture.dest.width / 2, texture.dest.height / 2};
 }
+
 void Player::Draw(){
-    DrawTexturePro(texture.playerSprite, texture.source, texture.dest ,texture.origin, 0, WHITE);
+    DrawTexturePro(texture.playerSprite, 
+    texture.source, 
+    texture.dest,
+    texture.origin, 
+    0, 
+    WHITE);
 };
 
 void Player::checkCollision(){
+    // Floor Collision
     if(texture.dest.height / 2 + texture.dest.y >= GetScreenHeight()){
         texture.dest.y = GetScreenHeight() - texture.dest.height / 2;
     }
+
+    // Left Wall Collision
+    if(texture.dest.x - texture.dest.width / 2 < 0){
+        texture.dest.x = texture.dest.width / 2;
+    }
+
+    if(texture.dest.x + texture.dest.width / 2 < 0){
+        texture.dest.x = texture.dest.width / 2;
+    }
+
+    
 };
 
 void Player::updatePos(){
