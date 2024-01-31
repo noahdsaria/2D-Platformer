@@ -33,6 +33,8 @@ class Player {
 
         void checkCollision();
 
+        void updatePos();
+
         void horizontalMove();
 
         void animateWalk();

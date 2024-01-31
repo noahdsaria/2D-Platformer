@@ -19,6 +19,7 @@ void Player::Update(){
     horizontalMove();
     Jump();
     animateWalk();
+    updatePos();
 };
 
 void Player::initPlayerTexture(){
@@ -36,9 +37,12 @@ void Player::checkCollision(){
     if(texture.dest.height / 2 + texture.dest.y >= GetScreenHeight()){
         texture.dest.y = GetScreenHeight() - texture.dest.height / 2;
     }
-
 };
 
+void Player::updatePos(){
+        texture.dest.x += speedX * GetFrameTime();
+        texture.dest.y += speedY * GetFrameTime();
+}
 
 void Player::horizontalMove(){
     if(IsKeyDown(KEY_RIGHT)){
@@ -55,7 +59,6 @@ void Player::horizontalMove(){
         playerMoving = false;
         speedX = 0;
     }
-    texture.dest.x += speedX * GetFrameTime();
 };
 
 void Player::animateWalk(){
