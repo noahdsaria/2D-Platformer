@@ -2,7 +2,7 @@
 #include <math.h>
 #include <iostream>
 
-const float GRAVITY = 400;
+const float GRAVITY = 20;
 // Constructor
 Player::Player() : 
 speedX(0),
@@ -120,7 +120,7 @@ void Player::verticalMove(){
 
     // Apply Gravity in Air 
     if(Airborne){
-        speedY += GRAVITY * GetFrameTime();
+        speedY += GRAVITY;
     }
 
 };
