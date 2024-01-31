@@ -2,7 +2,7 @@
 #include <math.h>
 #include <iostream>
 
-const float GRAVITY = 20;
+const float GRAVITY = 50;
 // Constructor
 Player::Player() : 
 speedX(0),
@@ -114,8 +114,13 @@ void Player::animateWalk(){
 void Player::verticalMove(){
     
     if(IsKeyPressed(KEY_SPACE) && !Airborne){
-        speedY = -500;
+        speedY = -1250; 
         Airborne = true;
+    }
+
+    // Variable Jump Height
+    if(IsKeyReleased(KEY_SPACE) && speedY < 0){
+        speedY = 0;
     }
 
     // Apply Gravity in Air 
