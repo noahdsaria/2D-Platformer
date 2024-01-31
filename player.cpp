@@ -54,11 +54,9 @@ void Player::checkCollision(){
         texture.dest.x = texture.dest.width / 2;
     }
 
-    if(texture.dest.x + texture.dest.width / 2 < 0){
-        texture.dest.x = texture.dest.width / 2;
+    else if(texture.dest.x + texture.dest.width / 2 > GetScreenWidth()){
+        texture.dest.x =  GetScreenWidth() - texture.dest.width / 2;
     }
-
-    
 };
 
 void Player::updatePos(){
