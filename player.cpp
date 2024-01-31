@@ -98,10 +98,10 @@ void Player::animateWalk(){
     // Choose direction, define negative width to flip left
     // FIXME: Animation played in reverse when flipped
     if(playerDirection == 1){
-        texture.source.width = -fabs(texture.source.width);
+        texture.source.y = texture.source.height;
     }
     else{
-        texture.source.width = fabs(texture.source.width);
+        texture.source.y = 0;
     }
 
     frameCount++;
