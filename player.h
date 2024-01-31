@@ -41,5 +41,5 @@ class Player {
 
         void checkAirborne();
 
-        void Jump();
+        void verticalMove();
 };

@@ -2,7 +2,7 @@
 #include <math.h>
 #include <iostream>
 
-const float GRAVITY = 9.8;
+const float GRAVITY = 400;
 // Constructor
 Player::Player() : 
 speedX(0),
@@ -15,11 +15,11 @@ Airborne(false)
 {};
 
 void Player::Update(){
-    checkCollision();
     horizontalMove();
-    Jump();
-    animateWalk();
+    verticalMove();
     updatePos();
+    checkCollision();
+    animateWalk();
 };
 
 void Player::initPlayerTexture(){
@@ -47,6 +47,8 @@ void Player::checkCollision(){
     // Floor Collision
     if(texture.dest.height / 2 + texture.dest.y >= GetScreenHeight()){
         texture.dest.y = GetScreenHeight() - texture.dest.height / 2;
+        speedY = 0;
+        Airborne = false;
     }
 
     // Left Wall Collision
@@ -54,6 +56,7 @@ void Player::checkCollision(){
         texture.dest.x = texture.dest.width / 2;
     }
 
+    // Right Wall Collision
     else if(texture.dest.x + texture.dest.width / 2 > GetScreenWidth()){
         texture.dest.x =  GetScreenWidth() - texture.dest.width / 2;
     }
@@ -95,10 +98,8 @@ void Player::animateWalk(){
         playerFrame = 0;
     }
 
-    // Choose direction, define negative width to flip left
-    // FIXME: Animation played in reverse when flipped
     if(playerDirection == 1){
-        texture.source.y = texture.source.height;
+        texture.source.y = texture.source.height;   //Set to second row of sheet
     }
     else{
         texture.source.y = 0;
@@ -110,7 +111,18 @@ void Player::animateWalk(){
     texture.source.x = texture.source.width * (float) playerFrame;
 }
 
-void Player::Jump(){
+void Player::verticalMove(){
+    
+    if(IsKeyPressed(KEY_SPACE) && !Airborne){
+        speedY = -500;
+        Airborne = true;
+    }
+
+    // Apply Gravity in Air 
+    if(Airborne){
+        speedY += GRAVITY * GetFrameTime();
+    }
+
 };
 
 
