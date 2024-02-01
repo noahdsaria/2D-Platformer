@@ -2,7 +2,7 @@
 #include <math.h>
 #include <iostream>
 
-const float GRAVITY = 50;
+const float GRAVITY = 60;
 // Constructor
 Player::Player() : 
 speedX(0),
@@ -24,12 +24,12 @@ void Player::Update(){
 
 void Player::initPlayerTexture(){
     texture.playerSprite = LoadTexture("sprites/player.png");
-    texture.source = {0, 0, (float) texture.playerSprite.width / 9, (float) texture.playerSprite.height / 2};
+    texture.source = {0, 0, (float) texture.playerSprite.width / 9, (float) texture.playerSprite.height / 3};
     texture.dest = {
     (float) GetScreenWidth() / 2, 
-    (float) GetScreenHeight() - (float) texture.source.height / 2, 
+    (float) GetScreenHeight() - (float) texture.source.height / 3, 
     (float) texture.playerSprite.width / 9, 
-    (float) texture.playerSprite.height / 2};
+    (float) texture.playerSprite.height / 3};
     
     texture.origin = {(float) texture.dest.width / 2, texture.dest.height / 2};
 }
@@ -42,6 +42,47 @@ void Player::Draw(){
     0, 
     WHITE);
 };
+
+void Player::animateWalk(){
+    // NOTICE: Funky scaling with spritesheet on export, set dest height to
+    // 3x source height
+
+    // Moving right, transition sprite every 7 frames
+    if(!Airborne){
+        if(playerMoving && frameCount % 7 == 0){
+            playerFrame++;
+            if(playerFrame >= 8){
+                playerFrame = 1;
+            }  
+        }
+        // Idle
+        else if(!playerMoving && frameCount % 7 == 0){
+            playerFrame = 0;
+        }
+
+        // Left Animation
+        if(playerDirection == 1){
+            texture.source.y = texture.source.height;   //Set to second row of sheet
+        }
+        else if(playerDirection == 0){
+            texture.source.y = 0;
+    }
+
+    frameCount++;
+    
+    // Moves across source sheet, by width per frame
+    texture.source.x = texture.source.width * (float) playerFrame;
+    }
+
+    else {
+        // Animate moving up
+        if(speedY == 0){
+            texture.source.y = texture.source.height*2;
+        }
+
+        // Animate moving down
+    }
+}
 
 void Player::checkCollision(){
     // Floor Collision
@@ -84,36 +125,6 @@ void Player::horizontalMove(){
     }
 };
 
-void Player::animateWalk(){
-
-    // Moving right, transition sprite every 7 frames
-    if(!Airborne){
-        if(playerMoving && frameCount % 7 == 0){
-            playerFrame++;
-            if(playerFrame >= 8){
-                playerFrame = 1;
-            }  
-        }
-        // Idle
-        else if(!playerMoving && frameCount % 7 == 0){
-            playerFrame = 0;
-        }
-
-        // Left Animation
-        if(playerDirection == 1){
-            texture.source.y = texture.source.height;   //Set to second row of sheet
-        }
-        else if(playerDirection == 0){
-            texture.source.y = 0;
-    }
-
-    frameCount++;
-    
-    // Moves across source sheet, by width per frame
-    texture.source.x = texture.source.width * (float) playerFrame;
-
-    }
-}
 
 void Player::verticalMove(){
     
