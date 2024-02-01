@@ -87,28 +87,32 @@ void Player::horizontalMove(){
 void Player::animateWalk(){
 
     // Moving right, transition sprite every 7 frames
-    if(playerMoving && frameCount % 7 == 0){
-        playerFrame++;
-        if(playerFrame >= 8){
-            playerFrame = 1;
-        }  
-    }
-    // Idle
-    else if(!playerMoving && frameCount % 7 == 0){
-        playerFrame = 0;
-    }
+    if(!Airborne){
+        if(playerMoving && frameCount % 7 == 0){
+            playerFrame++;
+            if(playerFrame >= 8){
+                playerFrame = 1;
+            }  
+        }
+        // Idle
+        else if(!playerMoving && frameCount % 7 == 0){
+            playerFrame = 0;
+        }
 
-    if(playerDirection == 1){
-        texture.source.y = texture.source.height;   //Set to second row of sheet
-    }
-    else{
-        texture.source.y = 0;
+        // Left Animation
+        if(playerDirection == 1){
+            texture.source.y = texture.source.height;   //Set to second row of sheet
+        }
+        else if(playerDirection == 0){
+            texture.source.y = 0;
     }
 
     frameCount++;
     
     // Moves across source sheet, by width per frame
     texture.source.x = texture.source.width * (float) playerFrame;
+
+    }
 }
 
 void Player::verticalMove(){
