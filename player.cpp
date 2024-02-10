@@ -112,12 +112,12 @@ void Player::horizontalMove(){
     if(IsKeyDown(KEY_RIGHT)){
         playerDirection = 0;
         playerMoving = true;
-        speedX = 200;
+        speedX = 300;
     }
     else if(IsKeyDown(KEY_LEFT)){
         playerDirection = 1;
         playerMoving = true;
-        speedX = -200;
+        speedX = -300;
     }
     else{
         playerMoving = false;
